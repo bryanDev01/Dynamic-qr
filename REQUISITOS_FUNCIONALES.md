@@ -16,10 +16,10 @@ Un QR se imprime **una sola vez** y apunta siempre a la misma URL. Esa página m
 | ID | Requisito | Estado |
 |----|-----------|--------|
 | RF-01 | El QR codifica una **URL fija** (`https://<proyecto>.vercel.app/wifi_contra`). Nunca contiene la contraseña. | [DEFINIDO] |
-| RF-02 | Al escanear, el cliente ve el nombre de la red y la contraseña actual, con botón **Copiar**. Sin login. | [DEFINIDO] |
+| RF-02 | Al escanear, el cliente ve el nombre de la red y la contraseña actual, con botón **Copiar**, instrucciones de conexión y botón **Conectarme** (esquema `WIFI:`). Sin login. | [DEFINIDO] |
 | RF-03 | Existe un panel de administración (`/admin`) protegido por una contraseña única de administrador. | [DEFINIDO] |
 | RF-04 | El admin cambia la contraseña WiFi desde el panel; el cambio se refleja de inmediato para los clientes. | [DEFINIDO] |
-| RF-05 | El admin puede ver y descargar el QR (PNG) desde el panel. | [PROPUESTA] |
+| RF-05 | El admin puede ver y descargar el QR (PNG) desde el panel. | [DEFINIDO] |
 
 ---
 
@@ -65,11 +65,12 @@ Un QR se imprime **una sola vez** y apunta siempre a la misma URL. Esa página m
 
 | Clave | Tipo | Contenido | TTL |
 |-------|------|-----------|-----|
-| `wifi:config` | Hash | `ssid`, `password`, `updatedAt` (ISO) | ninguno |
+| `wifi:config` | Hash | `password`, `updatedAt` (ISO) | ninguno |
 | `session:{id}` | String | `"1"` (o JSON mínimo) | **3600 s** |
-| `login:fail:{ip}` | Contador | Intentos fallidos de login | 900 s *(PROPUESTA)* |
+| `login:fail:{ip}` | Contador | Intentos fallidos de login | 900 s |
 
 - `{id}` = 32 bytes aleatorios criptográficos (hex/base64url).
+- El **SSID** no vive en Redis: es fijo y proviene de la variable de entorno `WIFI_SSID` (ver P-07).
 - No hay historial ni auditoría (fuera de alcance, ver P-04).
 
 ---
@@ -83,7 +84,7 @@ Un QR se imprime **una sola vez** y apunta siempre a la misma URL. Esa página m
 | GET | `/admin` | Sí (redirige a login) | Panel: cambiar contraseña, ver/descargar QR |
 | POST | `/api/admin/login` | No | Body `{ password }` → crea sesión, cookie `httpOnly; Secure; SameSite=Strict` |
 | POST | `/api/admin/logout` | Sí | Borra la sesión en Redis y la cookie |
-| PUT | `/api/admin/wifi` | Sí | Body `{ ssid?, password }` → actualiza `wifi:config` |
+| PUT | `/api/admin/wifi` | Sí | Body `{ password }` → actualiza `wifi:config` |
 | GET | `/api/admin/qr` | Sí | PNG del QR de la URL fija |
 | GET | `/api/health` | `CRON_SECRET` | Lee/escribe una clave trivial en Redis (keep-alive) |
 
@@ -117,12 +118,12 @@ Un QR se imprime **una sola vez** y apunta siempre a la misma URL. Esa página m
 |----|----------|--------|
 | P-01 | Timeout de sesión admin | ✅ **Cerrada: 1 hora** |
 | P-05 | URL base | ✅ **Cerrada: URL `*.vercel.app` de producción** |
-| P-02 | ¿Validación mínima de la contraseña WiFi (longitud, caracteres)? | Abierta |
+| P-02 | ¿Validación mínima de la contraseña WiFi (longitud, caracteres)? | ✅ **Cerrada: 8–63 caracteres, sin caracteres de control** |
 | P-03 | ¿Notificar al admin cuando se cambia la contraseña? | Abierta |
 | P-04 | ¿Guardar historial de cambios? | Abierta (por defecto: **no**) |
-| P-06 | ¿Límite de intentos de login? (propuesta: 5 intentos / 15 min por IP) | Abierta |
-| P-07 | ¿El SSID es editable desde el panel o fijo? | Abierta |
-| P-08 | ¿Se necesita QR descargable (RF-05) en la primera versión? | Abierta |
+| P-06 | ¿Límite de intentos de login? (propuesta: 5 intentos / 15 min por IP) | ✅ **Cerrada: 5 intentos / 15 min por IP** |
+| P-07 | ¿El SSID es editable desde el panel o fijo? | ✅ **Cerrada: fijo vía `WIFI_SSID`** |
+| P-08 | ¿Se necesita QR descargable (RF-05) en la primera versión? | ✅ **Cerrada: sí, desde la primera versión** |
 | P-09 | ¿El centro es negocio? (define si el plan Hobby de Vercel es aplicable) | Abierta |
 
 ---
