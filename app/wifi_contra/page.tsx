@@ -12,19 +12,19 @@ export const metadata: Metadata = {
 function WifiCardSkeleton() {
   return (
     <div
-      className="w-full max-w-md rounded-3xl border border-hairline bg-surface p-7 sm:p-9"
+      className="w-full max-w-md rounded-3xl border border-hairline bg-surface p-5 sm:p-6"
       role="status"
       aria-label="Cargando datos de la red"
     >
-      <div className="mb-7 flex flex-col items-center gap-3">
-        <div className="h-3 w-32 animate-pulse rounded bg-neutral-800" />
-        <div className="h-7 w-48 animate-pulse rounded bg-neutral-800" />
+      <div className="mb-4 flex flex-col items-center gap-2">
+        <div className="h-3 w-28 animate-pulse rounded bg-neutral-800" />
+        <div className="h-6 w-40 animate-pulse rounded bg-neutral-800" />
       </div>
-      <div className="space-y-4">
-        <div className="h-20 animate-pulse rounded-2xl bg-surface-soft" />
-        <div className="h-20 animate-pulse rounded-2xl bg-surface-soft" />
+      <div className="space-y-2.5">
+        <div className="h-16 animate-pulse rounded-2xl bg-surface-soft" />
+        <div className="h-16 animate-pulse rounded-2xl bg-surface-soft" />
       </div>
-      <div className="mt-6 h-11 animate-pulse rounded-xl bg-neutral-800" />
+      <div className="mt-4 h-10 animate-pulse rounded-xl bg-neutral-800" />
       <span className="sr-only">Cargando…</span>
     </div>
   );
@@ -32,7 +32,7 @@ function WifiCardSkeleton() {
 
 export default function WifiPage() {
   return (
-    <main className="flex min-h-dvh items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(212,175,55,0.12),_transparent_55%)] px-4 py-12">
+    <main className="flex min-h-dvh items-center justify-center bg-[radial-gradient(circle_at_top,_rgba(212,175,55,0.12),_transparent_55%)] px-4 py-4">
       <Suspense fallback={<WifiCardSkeleton />}>
         <WifiCard />
       </Suspense>

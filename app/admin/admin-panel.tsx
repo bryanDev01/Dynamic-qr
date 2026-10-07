@@ -4,6 +4,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { PasswordInput } from "@/app/components/password-input";
+
 type AdminPanelProps = {
   ssid: string;
   initialUpdatedAt: string | null;
@@ -117,47 +119,29 @@ export function AdminPanel({ ssid, initialUpdatedAt }: AdminPanelProps) {
         </div>
 
         <form onSubmit={handleSubmit} className="mt-5 space-y-4">
-          <div>
-            <label
-              htmlFor="new-password"
-              className="block text-sm font-medium text-neutral-300"
-            >
-              Nueva contraseña
-            </label>
-            <input
-              id="new-password"
-              name="new-password"
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={8}
-              maxLength={63}
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              className="mt-2 h-11 w-full rounded-xl border border-hairline bg-black/50 px-4 outline-none transition-colors focus-visible:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
-            />
-          </div>
+          <PasswordInput
+            id="new-password"
+            label="Nueva contraseña"
+            name="new-password"
+            autoComplete="new-password"
+            required
+            minLength={8}
+            maxLength={63}
+            value={password}
+            onChange={setPassword}
+          />
 
-          <div>
-            <label
-              htmlFor="confirm-password"
-              className="block text-sm font-medium text-neutral-300"
-            >
-              Repetir contraseña
-            </label>
-            <input
-              id="confirm-password"
-              name="confirm-password"
-              type="password"
-              autoComplete="new-password"
-              required
-              minLength={8}
-              maxLength={63}
-              value={confirm}
-              onChange={(event) => setConfirm(event.target.value)}
-              className="mt-2 h-11 w-full rounded-xl border border-hairline bg-black/50 px-4 outline-none transition-colors focus-visible:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
-            />
-          </div>
+          <PasswordInput
+            id="confirm-password"
+            label="Repetir contraseña"
+            name="confirm-password"
+            autoComplete="new-password"
+            required
+            minLength={8}
+            maxLength={63}
+            value={confirm}
+            onChange={setConfirm}
+          />
 
           {error ? (
             <p role="alert" className="text-sm text-red-400">
