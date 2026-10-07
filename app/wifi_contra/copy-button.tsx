@@ -39,7 +39,7 @@ export function CopyButton({ value }: CopyButtonProps) {
     <button
       type="button"
       onClick={handleCopy}
-      className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-gold px-5 text-sm font-semibold text-black transition-colors hover:bg-gold-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+      className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gold px-5 text-base font-semibold text-black transition-colors hover:bg-gold-soft focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
       aria-live="polite"
     >
       {status === "copied"

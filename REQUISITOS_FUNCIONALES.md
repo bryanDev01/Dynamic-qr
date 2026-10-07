@@ -16,7 +16,7 @@ Un QR se imprime **una sola vez** y apunta siempre a la misma URL. Esa página m
 | ID | Requisito | Estado |
 |----|-----------|--------|
 | RF-01 | El QR codifica una **URL fija** (`https://<proyecto>.vercel.app/wifi_contra`). Nunca contiene la contraseña. | [DEFINIDO] |
-| RF-02 | Al escanear, el cliente ve el nombre de la red y la contraseña actual, con botón **Copiar**, instrucciones de conexión y botón **Conectarme** (esquema `WIFI:`). Sin login. | [DEFINIDO] |
+| RF-02 | Al escanear, el cliente ve el nombre de la red y la contraseña actual, con botón **Copiar** e instrucciones de conexión. Sin login. | [DEFINIDO] |
 | RF-03 | Existe un panel de administración (`/admin`) protegido por una contraseña única de administrador. | [DEFINIDO] |
 | RF-04 | El admin cambia la contraseña WiFi desde el panel; el cambio se refleja de inmediato para los clientes. | [DEFINIDO] |
 | RF-05 | El admin puede ver y descargar el QR (PNG) desde el panel. | [DEFINIDO] |

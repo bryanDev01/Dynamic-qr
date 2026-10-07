@@ -3,6 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { PasswordInput } from "@/app/components/password-input";
+
 export function LoginForm() {
   const router = useRouter();
   const [password, setPassword] = useState("");
@@ -52,21 +54,14 @@ export function LoginForm() {
       </p>
 
       <div className="mt-6">
-        <label
-          htmlFor="admin-password"
-          className="block text-sm font-medium text-neutral-300"
-        >
-          Contraseña de administrador
-        </label>
-        <input
+        <PasswordInput
           id="admin-password"
+          label="Contraseña de administrador"
           name="password"
-          type="password"
           autoComplete="current-password"
           required
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          className="mt-2 h-11 w-full rounded-xl border border-hairline bg-black/50 px-4 text-foreground outline-none transition-colors focus-visible:border-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+          onChange={setPassword}
         />
       </div>
 

@@ -32,6 +32,10 @@ Si la integración de Upstash en Vercel inyecta las variables con prefijo `KV_` 
 node -e "console.log(require('bcryptjs').hashSync('TU_CLAVE_SEGURA', 12))"
 ```
 
+> Importante: el hash contiene `$`, y Next.js interpreta `$` como referencia a variables en los `.env`.
+> Escapá cada `$` con `\$` y encerrá el valor entre comillas dobles, por ejemplo:
+> `ADMIN_PASSWORD_HASH="\$2b\$12\$..."`.
+
 ## Desarrollo
 
 ```bash
